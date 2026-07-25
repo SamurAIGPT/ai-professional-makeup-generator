@@ -14,6 +14,11 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
+    const headerApiKey = req.headers.get("x-custom-api-key");
+    const customApiKey = headerApiKey || session.user.customApiKey || null;
+    const apiKey = (customApiKey && customApiKey.trim().length > 0) ? customApiKey.trim() : config.ai.apiKey;
+    const hasApiKey = apiKey && !apiKey.includes("your_") && apiKey.trim() !== "";
+
     if (id) {
       let creation = await prisma.makeupCreation.findFirst({
         where: { id, userId: session.user.id }
@@ -21,9 +26,6 @@ export async function GET(req) {
       if (!creation) {
         return new NextResponse("Not Found", { status: 404 });
       }
-
-      const apiKey = config.ai.apiKey;
-      const hasApiKey = apiKey && !apiKey.includes("your_") && apiKey.trim() !== "";
 
       if (creation.status === "processing" && creation.requestId && !creation.requestId.startsWith("mock_") && hasApiKey) {
         try {
@@ -71,9 +73,6 @@ export async function GET(req) {
     });
 
     // 2. Active status checking & dynamic update (Webhook bypass pattern)
-    const apiKey = config.ai.apiKey;
-    const hasApiKey = apiKey && !apiKey.includes("your_") && apiKey.trim() !== "";
-    
     const updatedCreations = await Promise.all(
       creations.map(async (creation) => {
         if (creation.status === "processing" && creation.requestId && !creation.requestId.startsWith("mock_") && hasApiKey) {
