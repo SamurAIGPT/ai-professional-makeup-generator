@@ -17,6 +17,11 @@
 
 https://github.com/user-attachments/assets/b5b811ce-0ce8-4ddf-8522-428a4c5d651e
 
+## Related Projects
+
+- [MuAPI image-editing playground](https://muapi.ai/playground/gpt-image-2-image-to-image?utm_source=github&utm_medium=readme&utm_campaign=ai-professional-makeup-generator) — test reference-image makeup and virtual try-on workflows
+- [MuAPI model catalog](https://muapi.ai/docs/models?utm_source=github&utm_medium=readme&utm_campaign=ai-professional-makeup-generator) — browse models for image transformation
+
 ## 🌐 Project Details
 
 **GitHub Repository:** [github.com/SamurAIGPT/ai-professional-makeup-generator](https://github.com/SamurAIGPT/ai-professional-makeup-generator)
